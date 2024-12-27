@@ -1,0 +1,14 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor User #Pink
+entity System #darkblue
+activate User
+User -> System: getTaskDetails(taskID)
+activate System
+System --> User: returnTaskDetails(taskName)
+User -> System: setReminder(taskID, date, time, recurrence)
+System --> User: confirmReminderSet()
+@enduml

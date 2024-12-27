@@ -1,0 +1,70 @@
+@startuml
+
+
+class User {
+    - userID : String
+    - username : String
+    - email : String
+    - password : String
+    + addTask()
+    + removeTask()
+    + setReminder()
+    + generateReport()
+}
+
+class TODO {
+    - taskID : String
+    - title : String
+    - description : String
+    - dueDate : Date
+    - priority : String
+    - status : String
+    - creationTime : Date
+    + updateStatus()
+    + addReminder()
+}
+
+class TaskManager {
+    - allTasks : List<TODO>
+    - doneTasks : List<TODO>
+    - pendingTasks : List<TODO>
+    + addTask()
+    + getTasks()
+}
+
+class Reminder {
+    - reminderID : String
+    - reminderDateTime : Date
+    - Recurrence : String
+    - recurrenceTimeStamps : List<Date>
+    + triggerNotification()
+    + scheduleNext()
+}
+
+class TimeStamp {
+    - DateTimeStamps : List<Date>
+    + addTimeStamp()
+}
+
+class Notification {
+    - sentDateTime : Date
+    + send()
+}
+
+class Report {
+    - TimeFrame : String
+    + generate()
+}
+
+
+User "1" -- "1" TaskManager : owns
+TaskManager "1" -- "0..*" TODO : contains
+TODO "1" -- "0..*" Reminder : has
+Reminder "1" -- "1..*" Notification : triggers
+User "1" -- "1..*" TODO : manages
+User "1" -- "1..*" Reminder : sets
+User "1" -- "1..*" Report : generates
+Report "1..*" -- "1" TaskManager : collects
+Reminder "1..*" -- "1..*" TimeStamp : uses
+
+@enduml

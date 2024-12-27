@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+
+actor User #Pink
+entity System #darkblue
+activate User
+User -> System: validateCredentials(username, password)
+activate System
+System --> User: returnValidationResult(isValid)
+
+alt valid
+    System -> User: grantAccess() and displayTasks()
+else invalid
+    System -> User: ErrorMessage("Invalid username or password")
+end
+@enduml
