@@ -1,0 +1,33 @@
+@startuml
+
+title Add Account
+
+actor User
+participant "UI" as UI
+@startuml
+
+title Add Account
+
+actor User
+participant "Login Interface" as login
+participant "Backend" as Backend
+participant "Database" as DB
+
+
+User -> login: Clicks "Add an Account"
+login -> User: Display Account Creation Form
+User -> login: Inputs Username, Password, Email
+login -> Backend: Submit Form
+Backend -> Backend: Validate Inputs
+alt Valid Inputs
+    Backend -> DB: Save Account Details
+    DB --> Backend: Confirmation
+    Backend -> login: Success Message
+    login -> User: Redirect to Main Page
+else Invalid Inputs
+    Backend -> login: Error Message with Highlights
+    login -> User: Display Error Message
+end
+
+@enduml
+

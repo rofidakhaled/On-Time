@@ -1,0 +1,24 @@
+@startuml
+
+title Add New Task
+
+actor User
+participant "Home Page" as Page
+participant "Database" as DB
+
+User -> Page: Navigate to Add Task
+Page -> User: Display Add Task Form
+User -> Page: Enter Task Attributes
+alt Task Reminder Set
+    User -> Page: Set Task Reminder
+else Task Reminder Not Set
+    User -> Page: Do not set Task Reminder
+end
+User -> Page: Click Confirmation Button
+
+Page -> DB: Save Task
+DB --> Page: Task Saved Confirmation
+
+Page -> User: Show Completion Message
+
+@enduml
