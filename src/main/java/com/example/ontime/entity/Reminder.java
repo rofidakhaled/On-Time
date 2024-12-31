@@ -1,6 +1,7 @@
 package com.example.ontime.entity;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +10,9 @@ public class Reminder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reminderID; // Primary Key
+    private Long reminderID;
+
+    private String name;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date reminderDateTime;
@@ -17,7 +20,11 @@ public class Reminder {
     private String recurrence;
 
     @ElementCollection
-    private List<Date> recurrenceTimeStamps;
+    private List<Date> recurrenceTimeStamps = new ArrayList<>();
+
+    // Default constructor
+    public Reminder() {
+    }
 
     // Getters and Setters
     public Long getReminderID() {
@@ -26,6 +33,14 @@ public class Reminder {
 
     public void setReminderID(Long reminderID) {
         this.reminderID = reminderID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getReminderDateTime() {
@@ -52,4 +67,3 @@ public class Reminder {
         this.recurrenceTimeStamps = recurrenceTimeStamps;
     }
 }
-

@@ -4,23 +4,34 @@ import java.util.Date;
 
 public class ReminderDTO {
     private Long reminderID;
+    private String name;
     private Date reminderDateTime;
     private String recurrence;
 
-    // Constructor
-    public ReminderDTO(Long reminderID, Date reminderDateTime, String recurrence) {
+    public ReminderDTO() {
+    }
+
+    public ReminderDTO(Long reminderID, String name, Date reminderDateTime, String recurrence) {
         this.reminderID = reminderID;
+        this.name = name;
         this.reminderDateTime = reminderDateTime;
         this.recurrence = recurrence;
     }
 
-    // Getters and Setters
     public Long getReminderID() {
         return reminderID;
     }
 
     public void setReminderID(Long reminderID) {
         this.reminderID = reminderID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getReminderDateTime() {

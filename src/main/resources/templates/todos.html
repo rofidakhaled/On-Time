@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +8,16 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="text-center">ToDo List</h1>
-    <a href="/todos/add" class="btn btn-primary mb-3">Add New ToDo</a>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>ToDo List</h1>
+        <div>
+            <a th:href="@{/profile}" class="btn btn-secondary me-2">My Profile</a>
+            <a th:href="@{/report}" class="btn btn-info me-2">View Report</a>
+            <a th:href="@{/todos/add}" class="btn btn-primary me-2">Add New ToDo</a>
+            <a th:href="@{/reminders}" class="btn btn-info">View Reminders</a>
+        </div>
+    </div>
+    
     <table class="table table-striped">
         <thead>
         <tr>
@@ -26,14 +34,15 @@
             <td th:text="${todo.taskName}"></td>
             <td th:text="${todo.taskDescription}"></td>
             <td>
-                        <span th:class="'badge ' + (todo.taskStatus == 'Completed' ? 'bg-success' : 'bg-warning')"
-                              th:text="${todo.taskStatus}"></span>
+                <span th:class="'badge ' + (${todo.taskStatus == 'Completed' ? 'bg-success' : 'bg-warning'})"
+                      th:text="${todo.taskStatus}"></span>
             </td>
             <td th:text="'Priority ' + ${todo.taskPriority}" class="fw-bold"></td>
             <td th:text="${#dates.format(todo.taskDueDate, 'yyyy-MM-dd')}"></td>
             <td>
                 <a th:href="@{'/todos/edit/' + ${todo.taskId}}" class="btn btn-sm btn-warning">Edit</a>
-                <a th:href="@{'/todos/delete/' + ${todo.taskId}}" class="btn btn-sm btn-danger">Delete</a>
+                <a th:href="@{'/todos/delete/' + ${todo.taskId}}" class="btn btn-sm btn-danger"
+                   onclick="return confirm('Are you sure you want to delete this todo?')">Delete</a>
             </td>
         </tr>
         </tbody>

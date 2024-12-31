@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Reminder</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Edit Reminder</h1>
+    <form th:action="@{/reminders/edit/{id}(id=${reminder.reminderID})}" method="post" class="mt-4">
+        <input type="hidden" name="reminderID" th:value="${reminder.reminderID}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Reminder Name</label>
+            <input type="text" id="name" name="name" class="form-control" 
+                   th:value="${reminder.name}" required>
+        </div>
+        <div class="mb-3">
+            <label for="reminderDateTime" class="form-label">Date & Time</label>
+            <input type="datetime-local" id="reminderDateTime" name="reminderDateTime" 
+                   class="form-control" required
+                   th:value="${#dates.format(reminder.reminderDateTime, 'yyyy-MM-dd''T''HH:mm')}">
+        </div>
+        <div class="mb-3">
+            <label for="recurrence" class="form-label">Recurrence</label>
+            <select id="recurrence" name="recurrence" class="form-select"
+                    th:value="${reminder.recurrence}">
+                <option value="">No Recurrence</option>
+                <option value="DAILY" th:selected="${reminder.recurrence == 'DAILY'}">Daily</option>
+                <option value="WEEKLY" th:selected="${reminder.recurrence == 'WEEKLY'}">Weekly</option>
+                <option value="MONTHLY" th:selected="${reminder.recurrence == 'MONTHLY'}">Monthly</option>
+            </select>
+        </div>
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success">Update Reminder</button>
+            <a th:href="@{/reminders}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

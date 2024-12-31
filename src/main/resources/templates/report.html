@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Report</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .priority-high {
+            background-color: #ffdede;
+        }
+        .priority-medium {
+            background-color: #fff3de;
+        }
+        .priority-low {
+            background-color: #f0f9ff;
+        }
+        .task-count {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center mb-5">Activity Report</h1>
+
+    <!-- Pending Todos Section -->
+    <div class="card mb-4">
+        <div class="card-header bg-warning">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="h4 mb-0 text-dark">Pending Tasks</h2>
+                <span class="task-count" 
+                      th:text="${'(' + #lists.size(report.todos.?[taskStatus != 'COMPLETED']) + ' tasks)'}">
+                </span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" th:if="${!#lists.isEmpty(report.todos.?[taskStatus != 'COMPLETED'])}">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Task Name</th>
+                        <th>Description</th>
+                        <th>Due Date</th>
+                        <th>Priority</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="todo : ${report.todos.?[taskStatus != 'COMPLETED']}"
+                        th:class="${todo.taskPriority == 'HIGH' ? 'priority-high' : 
+                                 (todo.taskPriority == 'MEDIUM' ? 'priority-medium' : 'priority-low')}">
+                        <td th:text="${todo.taskName}"></td>
+                        <td th:text="${todo.taskDescription}"></td>
+                        <td th:text="${#dates.format(todo.taskDueDate, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${todo.taskPriority}"></td>
+                        <td>
+                            <a th:href="@{/todos/edit/{id}(id=${todo.taskId})}" class="btn btn-warning btn-sm">Edit</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${#lists.isEmpty(report.todos.?[taskStatus != 'COMPLETED'])}" class="text-center py-3">
+                <p class="text-muted mb-0">No pending tasks</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Completed Todos Section -->
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="h4 mb-0">Completed Tasks</h2>
+                <span class="task-count" 
+                      th:text="${'(' + #lists.size(report.todos.?[taskStatus == 'COMPLETED']) + ' tasks)'}">
+                </span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" th:if="${!#lists.isEmpty(report.todos.?[taskStatus == 'COMPLETED'])}">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Task Name</th>
+                        <th>Description</th>
+                        <th>Completion Date</th>
+                        <th>Priority</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="todo : ${report.todos.?[taskStatus == 'COMPLETED']}"
+                        th:class="${todo.taskPriority == 'HIGH' ? 'priority-high' : 
+                                 (todo.taskPriority == 'MEDIUM' ? 'priority-medium' : 'priority-low')}">
+                        <td th:text="${todo.taskName}"></td>
+                        <td th:text="${todo.taskDescription}"></td>
+                        <td th:text="${#dates.format(todo.taskCompletedDate, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${todo.taskPriority}"></td>
+                        <td>
+                            <a th:href="@{/todos/edit/{id}(id=${todo.taskId})}" class="btn btn-warning btn-sm">Edit</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${#lists.isEmpty(report.todos.?[taskStatus == 'COMPLETED'])}" class="text-center py-3">
+                <p class="text-muted mb-0">No completed tasks</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reminders Section -->
+    <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="h4 mb-0">Reminders</h2>
+                <span class="task-count" th:text="${'(' + #lists.size(report.reminders) + ' reminders)'}"></span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" th:if="${!#lists.isEmpty(report.reminders)}">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Date & Time</th>
+                        <th>Recurrence</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="reminder : ${report.reminders}">
+                        <td th:text="${reminder.name}"></td>
+                        <td th:text="${#dates.format(reminder.reminderDateTime, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td th:text="${reminder.recurrence}"></td>
+                        <td>
+                            <div class="btn-group">
+                                <a th:href="@{/reminders/edit/{id}(id=${reminder.reminderID})}" class="btn btn-warning btn-sm">Edit</a>
+                                <form th:action="@{/reminders/{id}/trigger(id=${reminder.reminderID})}" 
+                                      method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-info btn-sm">Trigger</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${#lists.isEmpty(report.reminders)}" class="text-center py-3">
+                <p class="text-muted mb-0">No reminders</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="d-flex justify-content-between mt-4">
+        <a th:href="@{/todos}" class="btn btn-primary">Manage Todos</a>
+        <a th:href="@{/reminders}" class="btn btn-success">Manage Reminders</a>
+    </div>
+</div>
+</body>
+</html>

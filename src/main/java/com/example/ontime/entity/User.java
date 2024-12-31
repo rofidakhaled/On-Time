@@ -1,14 +1,16 @@
 package com.example.ontime.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "app_user")
 public class User {
     @Id
     private String id;
     private String name;
     private String email;
-    private int password;
+    private String password;
 
     public void setId(String id) {
         this.id = id;
@@ -34,11 +36,11 @@ public class User {
         this.name = name;
     }
 
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(int password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 }

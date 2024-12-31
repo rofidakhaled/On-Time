@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
 <body>
 <div class="container mt-5">
     <h1 class="text-center">Edit ToDo</h1>
-    <form th:action="@{/todos/edit/{taskId}(taskId=${ToDo.taskId})}" th:object="${ToDo}" method="post" class="mt-4">
+    <form th:action="@{/todos/edit/{taskId}(taskId=${todo.taskId})}" th:object="${todo}" method="post" class="mt-4">
         <div class="mb-3">
             <label for="taskName" class="form-label">Task Name</label>
             <input type="text" id="taskName" name="taskName" class="form-control" th:field="*{taskName}" required>
@@ -34,7 +34,7 @@
             <input type="date" id="taskDueDate" name="taskDueDate" class="form-control" th:field="*{taskDueDate}" required>
         </div>
         <button type="submit" class="btn btn-success">Update</button>
-        <a href="/ToDos" class="btn btn-secondary">Cancel</a>
+        <a th:href="@{/todos}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 </body>
