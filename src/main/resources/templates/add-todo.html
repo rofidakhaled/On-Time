@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add ToDo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Add ToDo</h1>
+    <form th:action="@{/todos/add}" th:object="${todo}" method="post" class="mt-4">
+        <div class="mb-3">
+            <label for="taskName" class="form-label">Task Name</label>
+            <input type="text" id="taskName" name="taskName" class="form-control" th:field="*{taskName}" required>
+        </div>
+        <div class="mb-3">
+            <label for="taskDescription" class="form-label">Description</label>
+            <textarea id="taskDescription" name="taskDescription" class="form-control" th:field="*{taskDescription}"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="taskStatus" class="form-label">Status</label>
+            <select id="taskStatus" name="taskStatus" class="form-select" th:field="*{taskStatus}">
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="taskPriority" class="form-label">Priority</label>
+            <input type="number" id="taskPriority" name="taskPriority" class="form-control" th:field="*{taskPriority}" min="1" max="5" required>
+        </div>
+        <div class="mb-3">
+            <label for="taskDueDate" class="form-label">Due Date</label>
+            <input type="date" id="taskDueDate" name="taskDueDate" class="form-control" th:field="*{taskDueDate}" required>
+        </div>
+        <button type="submit" class="btn btn-success">Save</button>
+        <a href="/ToDos" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+</body>
+</html>

@@ -2,10 +2,11 @@ package com.example.ontime.model.dto;
 
 public class UserDTO {
 
-    private int id;
+    private String id;
     private String name;
     private String email;
     private int password;
+
 
     public String getName() {
         return name;
@@ -29,7 +30,10 @@ public class UserDTO {
     public void setPassword(int password) {
         this.password = password;
     }
-    public int getId() {
+    public String getId() {
         return id;
+    }
+    public void setId(String id){
+        this.id = id;
     }
 }
