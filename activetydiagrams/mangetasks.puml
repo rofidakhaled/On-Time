@@ -1,0 +1,13 @@
+@startuml
+start
+
+:User selects a task;
+:User updates task status;
+:TaskManager updates the task status;
+
+partition TaskManager {
+    :TaskManager stores task in doneTasks or pendingTasks based on status;
+}
+
+stop
+@enduml

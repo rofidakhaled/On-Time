@@ -67,4 +67,10 @@ public class ToDo {
     public void setTaskCreatedDate(Date taskCreatedDate) {
         this.taskCreatedDate = taskCreatedDate;
     }
+    public boolean isCompleted() {
+        return "COMPLETED".equalsIgnoreCase(this.taskStatus);
+    }
+    public boolean isPending() {
+        return "PENDING".equalsIgnoreCase(this.taskStatus);
+    }
 }
