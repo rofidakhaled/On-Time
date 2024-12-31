@@ -5,7 +5,7 @@ public class UserDTO {
     private String id;
     private String name;
     private String email;
-    private int password;
+    private String password;
 
 
     public String getName() {
@@ -24,10 +24,10 @@ public class UserDTO {
         this.email = email;
     }
 
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
-    public void setPassword(int password) {
+    public void setPassword(String password) {
         this.password = password;
     }
     public String getId() {

@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import com.example.ontime.entity.User;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @RequestMapping("/todos")
@@ -13,6 +16,13 @@ public class ToDoController {
 
     @Autowired
     private ToDoService todoService;
+
+    @GetMapping("/todos")
+    public String getUserToDos(Model model, @AuthenticationPrincipal User loggedInUser) {
+        String userId = loggedInUser.getId();
+        model.addAttribute("toDos", todoService.getToDosForUser(Integer.parseInt(userId)));  // Pass the ToDos for the logged-in user
+        return "todos";  // Return the view that displays the ToDos
+    }
 
     @GetMapping
     public String getAllToDos(Model model) {
