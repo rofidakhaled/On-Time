@@ -1,0 +1,15 @@
+@startuml
+start
+
+:User sets a reminder for a task;
+:Reminder is created with recurrence and datetime;
+:Reminder triggers a notification at the scheduled time;
+
+partition Reminder {
+    :Reminder triggers Notification;
+    :User receives notification;
+    :User schedules next reminder (if needed);
+}
+
+stop
+@enduml
