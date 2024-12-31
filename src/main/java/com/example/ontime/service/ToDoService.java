@@ -7,8 +7,6 @@ import com.example.ontime.model.dto.ToDoDTO;
 import com.example.ontime.repository.ToDoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.ontime.entity.TaskManager;
-import com.example.ontime.repository.TaskManagerRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,16 +15,6 @@ import java.util.Optional;
 public class ToDoService {
     @Autowired
     private ToDoRepository todoRepository;
-    @Autowired
-    private TaskManagerRepository taskManagerRepository;
-
-    public List<ToDo> getToDosForUser(int userId) {
-        TaskManager taskManager = taskManagerRepository.findByUserId(String.valueOf(userId));
-        if (taskManager != null) {
-            return taskManager.getToDos();
-        }
-        return null;
-    }
 
     public List<ToDo> getAllToDos() {
         return todoRepository.findAll();

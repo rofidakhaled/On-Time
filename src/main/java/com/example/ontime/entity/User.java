@@ -8,7 +8,7 @@ public class User {
     private String id;
     private String name;
     private String email;
-    private String password;
+    private int password;
 
     public void setId(String id) {
         this.id = id;
@@ -34,11 +34,11 @@ public class User {
         this.name = name;
     }
 
-    public String getPassword() {
+    public int getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(int password) {
         this.password = password;
     }
 }

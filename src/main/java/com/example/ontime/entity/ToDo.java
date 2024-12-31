@@ -1,5 +1,8 @@
 package com.example.ontime.entity;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 import java.util.Date;
 
@@ -15,9 +18,6 @@ public class ToDo {
     private Date taskDueDate;
     private Date taskCompletedDate;
     private Date taskCreatedDate;
-
-    @ManyToOne
-    private TaskManager taskManager;
 
     public int getTaskId() {
         return taskId;
