@@ -39,7 +39,6 @@ user --> UC10
 user --> UC12
 user --> UC7
 user --> UC6
-user --> UC9
 
 
 ' Relationships between use cases
@@ -51,7 +50,8 @@ UC7 --> UC4 : includes
 
 
 
-
+' Reminder notifications
+UC9 --> user
 
 
 @enduml
