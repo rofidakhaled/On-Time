@@ -1,0 +1,13 @@
+@startuml
+start
+
+:User requests a report;
+:TaskManager filters tasks based on the selected time frame;
+
+partition Report {
+    :Report is generated;
+    :User views the report;
+}
+
+stop
+@enduml
