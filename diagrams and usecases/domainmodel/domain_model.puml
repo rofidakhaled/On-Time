@@ -31,18 +31,11 @@ class Reminder {
     recurrenceTimeStamps
 }
 
-class TimeStamp
-{
-    DateTimeStamps
-}
-
 class Notification {
     sentDateTime
 }
 
 class Report{
-
- TimeFrame
 
 }
 

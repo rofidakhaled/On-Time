@@ -16,7 +16,7 @@ class TaskManager {
     + addTask(task: TODO)
     + removeTask(taskID: String)
     + getTasks()
-
+    + updateStatus(taskID: String, status: String)
 }
 
 class TODO {
@@ -24,12 +24,10 @@ class TODO {
     - title : String
     - description : String
     - dueDate : Date
-    - priority : int
+    - priority : String
     - status : String
     - creationTime : Date
     + addReminder(reminder: Reminder)
-    + updateReminder(reminder: Reminder)
-    + deleteReminder(reminder: Reminder)
 }
 
 class Reminder {
@@ -38,9 +36,7 @@ class Reminder {
     - recurrence : String
     - recurrenceTimeStamps : List<Date>
     + triggerNotification()
-    + editReminder()
-    + deleteReminder()
-
+    + scheduleNext()
 }
 
 class Notification {
@@ -49,6 +45,8 @@ class Notification {
 }
 
 class Report {
+    - timeFrame : String
+    + generate(tasks: List<TODO>)
 }
 
 User "1" -- "1" TaskManager : owns
