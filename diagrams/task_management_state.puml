@@ -1,0 +1,47 @@
+@startuml Task Management State Diagram
+
+[*] --> TaskDashboard
+
+state TaskDashboard {
+    [*] --> ViewTasks
+    ViewTasks --> AddNewTask : Click Add Task
+    ViewTasks --> EditTask : Select Task
+    ViewTasks --> DeleteTask : Click Delete
+    ViewTasks --> SetReminder : Click Set Reminder
+    
+    state AddNewTask {
+        [*] --> EnterTaskDetails
+        EnterTaskDetails --> ValidateTaskInput
+        ValidateTaskInput --> SaveTask : Valid Input
+        ValidateTaskInput --> EnterTaskDetails : Invalid Input
+        SaveTask --> ViewTasks : Task Created
+    }
+    
+    state EditTask {
+        [*] --> ModifyTaskDetails
+        ModifyTaskDetails --> ValidateChanges
+        ValidateChanges --> UpdateTask : Valid Changes
+        ValidateChanges --> ModifyTaskDetails : Invalid Changes
+        UpdateTask --> ViewTasks : Task Updated
+    }
+    
+    state SetReminder {
+        [*] --> SelectDateTime
+        SelectDateTime --> ConfigureNotification
+        ConfigureNotification --> SaveReminder
+        SaveReminder --> ViewTasks : Reminder Set
+    }
+}
+
+state TaskStates {
+    Pending --> InProgress
+    InProgress --> Completed
+    Completed --> Archived
+    InProgress --> Pending : Revert
+    Completed --> InProgress : Reopen
+}
+
+TaskDashboard --> TaskStates : Update Task Status
+TaskStates --> TaskDashboard : View Tasks
+
+@enduml

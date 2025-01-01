@@ -1,0 +1,37 @@
+@startuml User Authentication State Diagram
+
+[*] --> NotAuthenticated
+
+state NotAuthenticated {
+    [*] --> LoginPage
+    LoginPage --> SignupPage : Click Register
+    SignupPage --> LoginPage : Click Login
+    
+    state SignupPage {
+        [*] --> CollectUserInfo
+        CollectUserInfo --> ValidateInput
+        ValidateInput --> CreateAccount : Valid Input
+        ValidateInput --> CollectUserInfo : Invalid Input
+        CreateAccount --> LoginPage : Account Created
+    }
+    
+    state LoginPage {
+        [*] --> EnterCredentials
+        EnterCredentials --> ValidateCredentials
+        ValidateCredentials --> Authenticated : Valid Credentials
+        ValidateCredentials --> EnterCredentials : Invalid Credentials
+    }
+}
+
+state Authenticated {
+    [*] --> Dashboard
+    Dashboard --> ViewProfile
+    Dashboard --> ManageTasks
+    ViewProfile --> Dashboard : Back
+    ManageTasks --> Dashboard : Back
+}
+
+NotAuthenticated --> Authenticated : Successful Login
+Authenticated --> NotAuthenticated : Logout
+
+@enduml

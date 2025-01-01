@@ -1,0 +1,45 @@
+@startuml Reminder System State Diagram
+
+[*] --> ReminderDashboard
+
+state ReminderDashboard {
+    [*] --> ViewReminders
+    ViewReminders --> CreateReminder : Add New
+    ViewReminders --> EditReminder : Modify
+    ViewReminders --> DeleteReminder : Remove
+}
+
+state CreateReminder {
+    [*] --> SelectTask
+    SelectTask --> ConfigureReminder
+    ConfigureReminder --> SetDateTime
+    ConfigureReminder --> SetRepetition
+    ConfigureReminder --> SetPriority
+    SetDateTime --> ValidateSettings
+    SetRepetition --> ValidateSettings
+    SetPriority --> ValidateSettings
+    ValidateSettings --> SaveReminder : Valid Settings
+    ValidateSettings --> ConfigureReminder : Invalid Settings
+    SaveReminder --> ViewReminders : Reminder Created
+}
+
+state ReminderStates {
+    Scheduled --> Active
+    Active --> Triggered
+    Triggered --> Acknowledged
+    Triggered --> Snoozed
+    Snoozed --> Triggered : After Delay
+    Acknowledged --> Completed
+}
+
+state NotificationTypes {
+    [*] --> InApp
+    [*] --> Email
+    [*] --> PushNotification
+}
+
+ReminderDashboard --> ReminderStates : Monitor Status
+ReminderStates --> NotificationTypes : Trigger Notification
+NotificationTypes --> ReminderStates : Update Status
+
+@enduml
