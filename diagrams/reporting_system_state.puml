@@ -10,39 +10,8 @@ state ReportDashboard {
 
 state SelectReportType {
     [*] --> TaskCompletionReport
-    [*] --> TimeManagementReport
-    [*] --> ProductivityReport
-    [*] --> CustomReport
+    [*] --> TaskPendingReport
+    [*] --> RemindersReport
 }
-
-state ConfigureReport {
-    [*] --> SetDateRange
-    SetDateRange --> SelectMetrics
-    SelectMetrics --> ChooseVisualization
-    ChooseVisualization --> ValidateConfig
-    ValidateConfig --> ApplyFilters : Valid Config
-    ValidateConfig --> SelectMetrics : Invalid Config
-}
-
-state GenerateReport {
-    [*] --> ProcessData
-    ProcessData --> CreateVisualizations
-    CreateVisualizations --> ExportOptions
-    ExportOptions --> PDF
-    ExportOptions --> CSV
-    ExportOptions --> Dashboard
-}
-
-state ReportViews {
-    [*] --> TableView
-    [*] --> ChartView
-    [*] --> KPIDashboard
-    TableView --> ExportData
-    ChartView --> ExportImage
-    KPIDashboard --> ShareReport
-}
-
-ReportDashboard --> ReportViews : View Generated Report
-ReportViews --> ReportDashboard : New Report
 
 @enduml

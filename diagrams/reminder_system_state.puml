@@ -10,14 +10,13 @@ state ReminderDashboard {
 }
 
 state CreateReminder {
-    [*] --> SelectTask
-    SelectTask --> ConfigureReminder
+
+    [*] --> ConfigureReminder
     ConfigureReminder --> SetDateTime
     ConfigureReminder --> SetRepetition
-    ConfigureReminder --> SetPriority
+
     SetDateTime --> ValidateSettings
     SetRepetition --> ValidateSettings
-    SetPriority --> ValidateSettings
     ValidateSettings --> SaveReminder : Valid Settings
     ValidateSettings --> ConfigureReminder : Invalid Settings
     SaveReminder --> ViewReminders : Reminder Created
@@ -27,14 +26,10 @@ state ReminderStates {
     Scheduled --> Active
     Active --> Triggered
     Triggered --> Acknowledged
-    Triggered --> Snoozed
-    Snoozed --> Triggered : After Delay
     Acknowledged --> Completed
 }
 
 state NotificationTypes {
-    [*] --> InApp
-    [*] --> Email
     [*] --> PushNotification
 }
 

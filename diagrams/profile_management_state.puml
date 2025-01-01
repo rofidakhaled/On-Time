@@ -5,8 +5,8 @@
 state ViewProfile {
     [*] --> DisplayProfileInfo
     DisplayProfileInfo --> EditProfile : Click Edit
-    DisplayProfileInfo --> ChangePassword : Click Change Password
-    DisplayProfileInfo --> ManagePreferences : Click Preferences
+
+
 }
 
 state EditProfile {
@@ -17,26 +17,5 @@ state EditProfile {
     SaveChanges --> DisplayProfileInfo : Profile Updated
 }
 
-state ChangePassword {
-    [*] --> EnterCurrentPassword
-    EnterCurrentPassword --> EnterNewPassword : Verified
-    EnterNewPassword --> ConfirmNewPassword
-    ConfirmNewPassword --> ValidatePassword
-    ValidatePassword --> UpdatePassword : Valid Password
-    ValidatePassword --> EnterNewPassword : Invalid Password
-    UpdatePassword --> DisplayProfileInfo : Password Changed
-    EnterCurrentPassword --> DisplayProfileInfo : Cancel
-}
-
-state ManagePreferences {
-    [*] --> DisplayPreferences
-    DisplayPreferences --> UpdateNotificationSettings
-    DisplayPreferences --> UpdateTimeZone
-    DisplayPreferences --> UpdateTheme
-    UpdateNotificationSettings --> SavePreferences
-    UpdateTimeZone --> SavePreferences
-    UpdateTheme --> SavePreferences
-    SavePreferences --> DisplayProfileInfo : Preferences Saved
-}
 
 @enduml

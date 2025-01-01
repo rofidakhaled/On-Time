@@ -8,8 +8,6 @@ state TaskDashboard {
     ViewTasks --> EditTask : Select Task
     ViewTasks --> DeleteTask : Click Delete
     ViewTasks --> SetReminder : Click Set Reminder
-    ViewTasks --> ViewReport : Click View Report
-    ViewTasks --> ViewProfile : Click View Profile
     
     state AddNewTask {
         [*] --> EnterTaskDetails
@@ -26,12 +24,21 @@ state TaskDashboard {
         ValidateChanges --> ModifyTaskDetails : Invalid Changes
         UpdateTask --> ViewTasks : Task Updated
     }
-
+    
+    state SetReminder {
+        [*] --> SelectDateTime
+        SelectDateTime --> ConfigureNotification
+        ConfigureNotification --> SaveReminder
+        SaveReminder --> ViewTasks : Reminder Set
+    }
 }
 
 state TaskStates {
-    Pending --> completed
-    Completed --> pending : Reopen
+    Pending --> InProgress
+    InProgress --> Completed
+    Completed --> Archived
+    InProgress --> Pending : Revert
+    Completed --> InProgress : Reopen
 }
 
 TaskDashboard --> TaskStates : Update Task Status

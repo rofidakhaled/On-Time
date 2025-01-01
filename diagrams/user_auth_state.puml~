@@ -23,6 +23,13 @@ state NotAuthenticated {
     }
 }
 
+state Authenticated {
+    [*] --> Dashboard
+    Dashboard --> ViewProfile
+    Dashboard --> ManageTasks
+    ViewProfile --> Dashboard : Back
+    ManageTasks --> Dashboard : Back
+}
 
 NotAuthenticated --> Authenticated : Successful Login
 Authenticated --> NotAuthenticated : Logout
