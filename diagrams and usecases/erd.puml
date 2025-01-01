@@ -1,0 +1,68 @@
+@startuml Entity Relationship Diagram
+
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <u>x</u>
+!define foreign_key(x) #x#
+
+' Define tables
+table(User) {
+    primary_key(id): String
+    name: String
+    email: String
+    password: String
+}
+
+table(TaskManager) {
+    primary_key(id): Long
+    foreign_key(user_id): String
+}
+
+table(ToDo) {
+    primary_key(id): Long
+    foreign_key(task_manager_id): Long
+    title: String
+    description: String
+    status: String
+    creationTime: DateTime
+    dueDate: DateTime
+}
+
+table(Reminder) {
+    primary_key(reminderID): Long
+    foreign_key(todo_id): Long
+    name: String
+    reminderDateTime: DateTime
+    recurrence: String
+}
+
+table(RecurrenceTimeStamp) {
+    primary_key(id): Long
+    foreign_key(reminder_id): Long
+    timeStamp: DateTime
+}
+
+table(Notification) {
+    primary_key(id): Long
+    foreign_key(reminder_id): Long
+    sentDateTime: DateTime
+    status: String
+}
+
+table(Report) {
+    primary_key(id): Long
+    foreign_key(user_id): String
+    type: String
+    timeFrame_start: DateTime
+    timeFrame_end: DateTime
+    generatedTime: DateTime
+}
+
+' Define relationships
+User "1" -- "1" TaskManager : has >
+TaskManager "1" -- "*" ToDo : manages >
+ToDo "1" -- "*" Reminder : has >
+Reminder "1" -- "*" RecurrenceTimeStamp : contains >
+Reminder "1" -- "*" Notification : triggers >
+User "1" -- "*" Report : generates >
+
+@enduml
