@@ -19,6 +19,6 @@ User -> Page: Click Confirmation Button
 Page -> DB: Save Task
 DB --> Page: Task Saved Confirmation
 
-Page -> User: Show Completion Message
+Page -> User: displays task in the todo list
 
 @enduml
